@@ -1,0 +1,34 @@
+extends layout
+
+block content
+  h1= title
+
+  table.table 
+    thead 
+      tr 
+        th 
+          p Name 
+        th  
+          p Full name 
+        th 
+          p Email 
+        th 
+          p Role 
+    tbody 
+      each val in user_list
+        tr 
+          td 
+            a(href=val.url) #{val.username} 
+          td 
+            span #{val.fullname}
+          td 
+            span #{val.email}            
+          td 
+            if val.role==0
+              span.text-success Regular User
+            else if val.role==2
+              span.text-danger Admin 
+            else
+              span.text-warning Editor
+      else 
+        tr There are no users.

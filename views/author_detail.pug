@@ -1,0 +1,32 @@
+extends layout
+
+block content
+
+  -  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  -  let birth = author.date_of_birth ? author.date_of_birth.toLocaleDateString(undefined, options) : "";
+  -  let death = author.date_of_death ? author.date_of_death.toLocaleDateString(undefined, options) : "";
+  
+  h1 Author: #[strong #{author.name}]
+  p #{birth} - #{death}
+
+  div(style='margin-left:20px;margin-top:20px')
+
+    h4 Books
+
+    hr
+
+    dl
+      each book in author_books
+        dt
+          a(href=book.url) #{book.title}
+        dd #{book.summary}
+          hr
+
+      else
+        p This author has no books.
+
+  hr
+  p
+    a(href=author.url+'/delete') Delete author
+  p 
+    a(href=author.url+'/update') Update author

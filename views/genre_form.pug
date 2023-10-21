@@ -1,0 +1,30 @@
+extends layout
+
+block content
+  h1 #{title}
+
+  form(method='POST' action='')
+    div.form-group
+      label(for='name') Genre:
+      input#name.form-control(type='text', placeholder='Fantasy, Poetry etc.' name='name' value=(undefined===genre ? '' : genre.name))
+    button.btn.btn-primary(type='submit') Submit
+
+  if errors
+   ul
+    for error in errors
+     //-li!= error.msg
+     li 
+       span.text-danger !{error.msg}
+
+  if genre_list
+   p 
+   h2 Existing Genres:
+  
+   ul
+     each genre in genre_list
+       li
+        
+         a(href=genre.url) #{genre.name}
+
+     else
+       li There are no genres.

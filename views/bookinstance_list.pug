@@ -1,0 +1,66 @@
+extends layout
+
+block content
+  h1= title
+
+  - const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  - bookinstance_list.sort(function(a, b) {let textA = a.book.title.toUpperCase(); let textB = b.book.title.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
+  -
+    function string_compact( str ){
+      if (str.length > 40){
+        return str.slice(0, 27) + "...." + str.slice(-8);
+      } else {
+        return str;
+      }
+    }
+
+  //-
+    ul
+      each val in bookinstance_list
+        li
+          a(href=val.url) #{val.book.title} : #{val.imprint} - 
+          if val.status=='Available'
+            span.text-success #{val.status}
+          else if val.status=='Maintenance'
+            span.text-danger #{val.status}
+          else
+            span.text-warning #{val.status}
+          if val.status!='Available'
+            span  (Due: #{val.due_back.toLocaleDateString(undefined, options)} )
+
+      else
+        li There are no book copies in this library.
+
+  table.table-sm 
+    thead 
+      tr 
+        th 
+          p Book 
+        th  
+          p Imprint 
+        th 
+          p Status 
+        th 
+          p Due date 
+    tbody 
+      each val in bookinstance_list
+        tr 
+          td 
+            a(href=val.book.url) #{string_compact(val.book.title)} 
+          td 
+            a(href=val.url) #[strong #{string_compact(val.imprint)}]
+          td 
+            if val.status=='Available'
+              span.text-success #{val.status}
+            else if val.status=='Maintenance'
+              span.text-danger #{val.status}
+            else
+              span.text-warning #{val.status}
+          td 
+            if val.status!='Available'
+              span #{val.due_back.toLocaleDateString(undefined, options)}
+      else
+       p There are no book copies in this library.
+
+
+      

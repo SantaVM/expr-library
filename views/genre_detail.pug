@@ -1,0 +1,35 @@
+extends layout
+
+block content
+
+  //-
+    - 
+      genre_books.sort(function(a, b) {
+        let textA = a.title.toUpperCase(); 
+        let textB = b.title.toUpperCase(); 
+        return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+        });
+
+  h1 Genre: #[strong #{genre.name}]
+
+  div(style='margin-left:20px;margin-top:20px')
+
+    h4 Books
+
+    hr
+
+    dl
+      each book in genre_books
+        dt
+          a(href=book.url) #{book.title}
+        dd #{book.summary}
+          hr
+
+      else
+        p This genre has no books
+
+  hr
+  p
+    a(href=genre.url+'/delete') Delete Genre
+  p
+    a(href=genre.url+'/update') Update Genre

@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  h1 #{title}: #[strong #{user.username}]
+
+  if (user.role==2 && user_num<2)
+
+    p 
+      span.text-danger #[strong You can not delete the last and only Administrator!]
+
+  else
+    p Do you #[strong REALLY] want to delete this User?
+
+    form(method='POST' action='')
+      div.form-group
+        input#genreid.form-control(type='hidden', name='userid', required='true', value=user._id )
+
+      button.btn.btn-primary(type='submit') Delete

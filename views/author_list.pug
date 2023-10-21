@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  h1= title
+
+  -  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+
+  ul
+    each author in author_list
+      li
+        -  let birth = author.date_of_birth ? author.date_of_birth.toLocaleDateString(undefined, options) : "";
+        -  let death = author.date_of_death ? author.date_of_death.toLocaleDateString(undefined, options) : "";
+        
+        a(href=author.url) #{author.name}
+        |  (#{birth} - #{death})
+
+    else
+      li There are no authors.
